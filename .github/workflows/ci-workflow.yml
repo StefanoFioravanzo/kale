@@ -54,9 +54,6 @@ jobs:
       - uses: actions/setup-node@v1
         with:
           node-version: '12.x'
-      - name: Fetch repository's history
-        run: |
-          git fetch --no-tags --prune --unshallow
       - name: Install dependencies
         working-directory: ${{env.working-directory}}
         run: |
@@ -64,7 +61,7 @@ jobs:
       - name: Run format:check against master
         working-directory: ${{env.working-directory}}
         run: |
-          yarn format -- --check --branch origin/master
+          yarn format -- --check
 
   build:
     runs-on: ubuntu-latest
