@@ -47,35 +47,33 @@ jobs:
 
   prettier:
     runs-on: ubuntu-latest
+    env:
+      working-directory: ./fronted
     steps:
       - uses: actions/checkout@v2
       - name: Fetch repository's history
         run: |
           git fetch --no-tags --prune --unshallow
-      - name: Move
-        run: |
-          cd frontend/
       - name: Install dependencies
         uses: borales/actions-yarn@v2.1.0
         with:
-          cmd: install
+          cmd: --cwd "${{env.working-directory}}" install
       - name: Run format:check against master
         uses: borales/actions-yarn@v2.1.0
         with:
-          cmd: format -- --check --branch origin/master
+          cmd: --cwd "${{env.working-directory}}" format -- --check --branch origin/master
 
   build:
     runs-on: ubuntu-latest
+    env:
+      working-directory: ./fronted
     steps:
       - uses: actions/checkout@v2
-      - name: Move
-        run: |
-          cd frontend/
       - name: Install dependencies
         uses: borales/actions-yarn@v2.1.0
         with:
-          cmd: install
+          cmd: --cwd "${{env.working-directory}}" install
       - name: Build extension
         uses: borales/actions-yarn@v2.1.0
         with:
-          cmd: build
+          cmd: --cwd "${{env.working-directory}}" build
