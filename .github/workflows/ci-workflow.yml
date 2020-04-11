@@ -8,6 +8,8 @@ on:
 jobs:
   pytest:
     runs-on: ubuntu-latest
+    env:
+      working-directory: ./backend
     steps:
     - uses: actions/checkout@v2
     - name: Set up Python 3.6
@@ -17,14 +19,17 @@ jobs:
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
-        pip install .[dev]
+        pip install ./backend[dev]
     - name: Test with pytest
+      working-directory: ${{env.working-directory}}
       run: |
         pip install pytest
         pytest -vv
 
   flake8:
     runs-on: ubuntu-latest
+    env:
+      working-directory: ./backend
     steps:
       - uses: actions/checkout@v2
       - name: Set up Python 3.6
@@ -35,5 +40,41 @@ jobs:
         run: |
           pip install flake8 flake8-docstrings
       - name: Lint with flake8
+        working-directory: ${{env.working-directory}}
         run: |
           flake8 . --count --show-source --statistics
+
+  prettier:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Fetch repository's history
+        run: |
+          git fetch --no-tags --prune --unshallow
+      - name: Move
+        run: |
+          cd frontend/
+      - name: Install dependencies
+        uses: borales/actions-yarn@v2.1.0
+        with:
+          cmd: install
+      - name: Run format:check against master
+        uses: borales/actions-yarn@v2.1.0
+        with:
+          cmd: format -- --check --branch origin/master
+
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Move
+        run: |
+          cd frontend/
+      - name: Install dependencies
+        uses: borales/actions-yarn@v2.1.0
+        with:
+          cmd: install
+      - name: Build extension
+        uses: borales/actions-yarn@v2.1.0
+        with:
+          cmd: build
