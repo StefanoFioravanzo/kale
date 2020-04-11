@@ -1,0 +1,75 @@
+{
+  "name": "kubeflow-kale-launcher",
+  "version": "1.4.0",
+  "description": "Deployment interface for Kubeflow Pipelines.",
+  "keywords": [
+    "jupyter",
+    "jupyterlab",
+    "jupyterlab-extension"
+  ],
+  "homepage": "https://github.com/kubeflow-kale/jupyterlab-kubeflow-kale",
+  "bugs": {
+    "url": "https://github.com/kubeflow-kale/jupyterlab-kubeflow-kale/issues"
+  },
+  "license": "BSD-3-Clause",
+  "author": "Stefano Fioravanzo <stefano.fioravanzo@gmail.com>",
+  "files": [
+    "lib/**/*.{d.ts,eot,gif,html,jpg,js,js.map,json,png,svg,woff2,ttf}",
+    "style/**/*.{css,eot,gif,html,jpg,json,png,svg,woff2,ttf}"
+  ],
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
+  "directories": {
+    "lib": "lib/"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/kubeflow-kale/kale.git"
+  },
+  "scripts": {
+    "build": "tsc",
+    "clean": "rimraf lib",
+    "prepublishOnly": "npm run build",
+    "watch": "tsc -w --listEmittedFiles",
+    "format": "pretty-quick --pattern '**/*.{ts,js,tsx,jsx,scss,css,html,md,json}'",
+    "format:check": "jlpm format --check",
+    "format:staged": "jlpm format --staged",
+    "format:check:staged": "jlpm format:check --staged"
+  },
+  "dependencies": {
+    "@jupyterlab/application": ">=1.1.0 <2.0.0",
+    "@jupyterlab/apputils": "^1.1.0",
+    "@jupyterlab/coreutils": "^3.1.0",
+    "@jupyterlab/notebook": "^1.1.0",
+    "@material-ui/core": "^4.4.3",
+    "@material-ui/icons": "^4.4.3",
+    "@phosphor/widgets": "^1.8.0",
+    "@types/node": "^11.13.8",
+    "@types/react-dom": "^16.9.1",
+    "react": "16.8.4",
+    "react-dom": "^16.8.0",
+    "react-sanitized-html": "^2.0.0",
+    "use-debounce": "^3.0.1"
+  },
+  "devDependencies": {
+    "husky": "^4.2.3",
+    "prettier": "^1.19.1",
+    "pretty-quick": "^2.0.1",
+    "rimraf": "~2.6.2",
+    "typescript": "3.5.1"
+  },
+  "resolutions": {
+    "@types/react": "^16.8.18"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "jupyterlab": {
+    "extension": true
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "jlpm format:check:staged"
+    }
+  }
+}
