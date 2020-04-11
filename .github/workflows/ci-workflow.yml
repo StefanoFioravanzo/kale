@@ -51,17 +51,20 @@ jobs:
       working-directory: ./frontend
     steps:
       - uses: actions/checkout@v2
+      - uses: actions/setup-node@v1
+        with:
+          node-version: '10.x'
       - name: Fetch repository's history
         run: |
           git fetch --no-tags --prune --unshallow
       - name: Install dependencies
-        uses: borales/actions-yarn@v2.1.0
+        working-directory: ${{env.working-directory}}
         with:
-          cmd: --cwd "${{env.working-directory}}" install
+          cmd: yarn install
       - name: Run format:check against master
-        uses: borales/actions-yarn@v2.1.0
+        working-directory: ${{env.working-directory}}
         with:
-          cmd: --cwd "${{env.working-directory}}" format -- --check --branch origin/master
+          cmd: yarn format -- --check --branch origin/master
 
   build:
     runs-on: ubuntu-latest
@@ -69,11 +72,14 @@ jobs:
       working-directory: ./frontend
     steps:
       - uses: actions/checkout@v2
+      - uses: actions/setup-node@v1
+        with:
+          node-version: '10.x'
       - name: Install dependencies
-        uses: borales/actions-yarn@v2.1.0
+        working-directory: ${{env.working-directory}}
         with:
-          cmd: --cwd "${{env.working-directory}}" install
+          cmd: yarn install
       - name: Build extension
-        uses: borales/actions-yarn@v2.1.0
+        working-directory: ${{env.working-directory}}
         with:
-          cmd: --cwd "${{env.working-directory}}" build
+          cmd: yarn build
