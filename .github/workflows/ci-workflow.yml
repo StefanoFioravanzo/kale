@@ -53,7 +53,7 @@ jobs:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v1
         with:
-          node-version: '10.x'
+          node-version: '12.x'
       - name: Fetch repository's history
         run: |
           git fetch --no-tags --prune --unshallow
@@ -74,7 +74,7 @@ jobs:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v1
         with:
-          node-version: '10.x'
+          node-version: '12.x'
       - name: Install dependencies
         working-directory: ${{env.working-directory}}
         run: |
