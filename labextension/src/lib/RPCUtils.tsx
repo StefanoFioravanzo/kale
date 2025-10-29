@@ -19,22 +19,54 @@ import { NotebookPanel } from '@jupyterlab/notebook';
 import { Kernel } from '@jupyterlab/services';
 import NotebookUtils from './NotebookUtils';
 import { isError, IError, IOutput } from '@jupyterlab/nbformat';
+import { Notification } from '@jupyterlab/apputils';
 
 export const globalUnhandledRejection = async (event: any) => {
-  // console.error(event.reason);
+  console.error(event.reason);
   if (event.reason instanceof BaseError) {
     console.error(event.reason.message, event.reason.error);
     event.reason.showDialog().then();
   } else {
-    showError(
-      'An unexpected error has occurred',
-      'JS',
-      `${event.reason.name}: ${event.reason.message}`,
-      'Please see the console for more information',
-      true,
-    ).then();
+    // pull the stacktrace for the unhandled error
+    const errorStack = event.reason.stack;
+    // isolate the segments
+    const stackLines = errorStack.split('\n');
+    // create alert string
+    const alert_string = 'Unhandled Error'
+    // call the toast pop up
+    if (errorStack.includes('lab/extensions/')){
+      // if the error is caused by a jupyterlab extension, try to isolate the extension name
+      const extensionName = getExtensionName(stackLines)
+      Notification.error(`An unhandled error has been thrown.`, {
+        actions: [
+          { label: 'Details', callback: () => NotebookUtils.showMessage(alert_string, 
+            ["An unhandled error was thrown from:",
+              extensionName,
+              "Please see console for more details."
+            ]) }
+        ],
+        autoClose: 3000
+      });
+    } else {
+      Notification.error(`An unhandled error has been thrown.`, {
+        actions: [
+          { label: 'Details', callback: () => NotebookUtils.showMessage(alert_string,
+            ["Please see console for more details."]) }
+        ],
+        autoClose: 3000
+      });
+    }
   }
 };
+
+function getExtensionName(stackLines: Array<string>){
+  const urlSplit = stackLines.slice(1,2).toString();
+  const extensionSplit = urlSplit.split('@').slice(1,2).toString();
+  const extensionParts = extensionSplit.split('/');
+  extensionParts.pop();
+  const extensionName = extensionParts.join('/');
+  return extensionName || 'unknown Jupyterlab extension';
+}
 
 export interface IRPCError {
   rpc: string;
