@@ -121,7 +121,7 @@ export const executeRpc = async (
   env: Kernel.IKernelConnection | NotebookPanel,
   func: string,
   kwargs: any = {},
-  ctx: any = {},
+  ctx: { nb_path: string | null } = { nb_path: null },
 ) => {
   const cmd: string =
     'from kale.rpc.run import run as __kale_rpc_run\n' +

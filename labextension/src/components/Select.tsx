@@ -128,7 +128,7 @@ import { LightTooltip } from './LightTooltip';
 export interface ISelectOption {
   label: string;
   value: string;
-  tooltip?: any;
+  tooltip?: React.ReactNode;
   invalid?: boolean;
 }
 

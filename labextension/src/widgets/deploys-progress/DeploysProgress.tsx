@@ -6,22 +6,32 @@ import { IDocumentManager } from '@jupyterlab/docmanager';
 
 import { DeployProgress } from './DeployProgress';
 
+export type UploadPipelineResp = {
+  pipeline: { pipelineid: string; versionid: string; name: string };
+};
+
+export type RunPipeline = {
+  id: string;
+  name: string;
+  status: string | null;
+};
+
 export type DeployProgressState = {
   showValidationProgress?: boolean;
   notebookValidation?: boolean;
-  validationWarnings?: boolean;
+  validationWarnings?: string[];
   // showSnapshotProgress?: boolean;
-  task?: any;
+  task?: Record<string, unknown>;
   // snapshotWarnings?: any;
   showCompileProgress?: boolean;
   compiledPath?: string;
-  compileWarnings?: any;
+  compileWarnings?: string[];
   showUploadProgress?: boolean;
-  pipeline?: false | any;
-  uploadWarnings?: any;
+  pipeline?: boolean | UploadPipelineResp;
+  uploadWarnings?: string[];
   showRunProgress?: boolean;
-  runPipeline?: any;
-  runWarnings?: any;
+  runPipeline?: boolean | RunPipeline;
+  runWarnings?: string[];
   deleted?: boolean;
   docManager?: IDocumentManager;
   namespace?: string;

@@ -23,11 +23,17 @@ const GPU_TYPES = [
 ];
 const DEFAULT_GPU_TYPE = GPU_TYPES[0].value;
 
+export interface ILimitAction {
+  action: 'update' | 'delete';
+  limitKey: string;
+  limitValue?: string;
+}
+
 interface ICellMetadataEditorDialog {
   open: boolean;
   stepName: string;
   limits: { [id: string]: string };
-  updateLimits: any;
+  updateLimits: (actions: ILimitAction[]) => void;
   toggleDialog: () => void;
 }
 
@@ -39,9 +45,9 @@ export const CellMetadataEditorDialog: React.FunctionComponent<
   };
 
   const limitAction = (
-    action: string,
-    limitKey: string,
-    limitValue: string | null = null
+    action: ILimitAction['action'],
+    limitKey: ILimitAction['limitKey'],
+    limitValue: ILimitAction['limitValue'] = undefined
   ) => {
     return {
       action,

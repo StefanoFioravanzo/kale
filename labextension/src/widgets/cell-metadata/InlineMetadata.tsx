@@ -23,7 +23,7 @@ interface IProps {
 interface IState {
   cellTypeClass: string;
   color: string;
-  dependencies: any[];
+  dependencies: React.ReactNode[];
   showEditor: boolean;
   isMergedCell: boolean;
 }

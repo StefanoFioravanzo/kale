@@ -125,7 +125,7 @@ export class CellMetadataEditor extends React.Component<IProps, IState> {
     }
   };
 
-  isEqual(a: any, b: any): boolean {
+  isEqual(a: BlockDependencyChoice[], b: BlockDependencyChoice[]): boolean {
     return JSON.stringify(a) === JSON.stringify(b);
   }
 
@@ -138,7 +138,7 @@ export class CellMetadataEditor extends React.Component<IProps, IState> {
       return;
     }
     // get the HTML element corresponding to the current active cell
-    const notebookContent = this.props.notebook.content as any;
+    const notebookContent = this.props.notebook.content;
     if (!notebookContent?.node?.childNodes) {
       return;
     }

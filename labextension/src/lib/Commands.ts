@@ -9,7 +9,9 @@ import {
   RPCError,
 } from './RPCUtils';
 
-type OnUpdateCallbak = (params: any) => void;
+import { DeployProgressState, RunPipeline } from '../widgets/deploys-progress/DeploysProgress';
+
+type OnUpdateCallbak = (params: Partial<DeployProgressState>) => void;
 
 import {
   DefaultState,
@@ -130,7 +132,7 @@ export default class Commands {
     };
   };
 
-  pollRun(runPipeline: any, onUpdate: OnUpdateCallbak) {
+  pollRun(runPipeline: RunPipeline, onUpdate: OnUpdateCallbak) {
     _legacy_executeRpcAndShowRPCError(
       this._notebook,
       this._kernel,

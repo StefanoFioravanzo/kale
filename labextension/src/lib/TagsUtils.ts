@@ -68,7 +68,7 @@ export default class TagsUtils {
     notebook: Notebook,
     index: number,
   ): IKaleCellTags | null {
-    const tags: string[] = CellUtils.getCellMetaData(notebook, index, 'tags');
+    const tags: string[] = CellUtils.getCellMetaData(notebook, index, 'tags') || [];
     if (tags) {
       const b_name = tags.map(v => {
         if (RESERVED_CELL_NAMES.includes(v)) {
@@ -155,7 +155,7 @@ export default class TagsUtils {
         notebookPanel.content,
         i,
         'tags',
-      );
+      ) || [];
       // If there is a prev tag that points to the old name, update it with the
       // new one.
       const newTags: string[] = (tags || [])
