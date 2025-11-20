@@ -92,6 +92,10 @@ kale --help  # or your usual CLI invocation pointing at the notebook
 > Note: the scripts rely on `devpi-server`, `devpi-client`, and `python -m build`.
 > Install them once in your virtualenv: `pip install devpi-server devpi-client build`.
 
+If you need KFP pods running in Kubernetes to pull from that devpi instance, see
+`backend/docs/devpi-k8s.md` for two workflows: exposing the laptop-hosted devpi
+to the cluster or deploying a disposable devpi service inside Kubernetes.
+
 ## 6. Running tests
 
 ```bash
