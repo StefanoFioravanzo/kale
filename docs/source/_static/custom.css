@@ -1,0 +1,71 @@
+/*
+ * Kale documentation custom styles.
+ *
+ * Layered on top of the Furo theme. Inspired by the Kubeflow SDK docs site
+ * for visual consistency across the Kubeflow project.
+ */
+
+:root {
+  --color-brand-primary: #743abd;
+  --color-brand-content: #743abd;
+  --color-brand-visited: #5a2aa0;
+}
+
+[data-theme="dark"] {
+  --color-brand-primary: #b084e0;
+  --color-brand-content: #b084e0;
+  --color-brand-visited: #9a6ed3;
+}
+
+/* Logo sizing in the sidebar */
+.sidebar-logo {
+  max-height: 48px;
+  width: auto;
+}
+
+/* Landing page hero tweaks */
+.kale-hero {
+  text-align: center;
+  padding: 2rem 0 1rem 0;
+}
+
+.kale-hero h1 {
+  font-size: 2.75rem;
+  margin-bottom: 0.5rem;
+}
+
+.kale-hero .tagline {
+  font-size: 1.15rem;
+  color: var(--color-foreground-muted);
+  margin-bottom: 1.5rem;
+}
+
+/* Feature card grid (sphinx-design) */
+.sd-card {
+  border-radius: 10px;
+  border: 1px solid var(--color-background-border);
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.sd-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 14px rgba(116, 58, 189, 0.15);
+}
+
+/* API reference tables */
+dl.py.class > dt,
+dl.py.function > dt,
+dl.py.method > dt {
+  background: var(--color-background-secondary);
+  border-left: 3px solid var(--color-brand-primary);
+  padding: 0.4rem 0.6rem;
+  border-radius: 4px;
+}
+
+/* Code block copy button */
+button.copybtn {
+  opacity: 0.5;
+}
+button.copybtn:hover {
+  opacity: 1;
+}
